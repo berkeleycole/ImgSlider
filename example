@@ -1,0 +1,86 @@
+<div id="grad">
+
+	<script type="text/javascript">
+	var currentImage = 0;
+	var nextImage = 1;
+	var sliderImages = [
+		"slider1.jpg", 
+		"slider2.jpg", 
+		"slider3.jpg", 
+		"slider4.jpg",
+		"slider5.jpg"
+	];
+	
+	$(document).ready(function() {
+		
+		sliderDivs = "";
+		
+		for (i = 0; i < sliderImages.length; i++) {
+			sliderDivs += "<div id='slider-image-"+i+"' class='slider-image' style='background-image: url(/slider/"+sliderImages[i]+");'></div>";
+		}
+		$('#slider-inner').append(sliderDivs);
+		$('#slider-image-0').css({display: "block"});
+		
+		 setInterval(function(){
+			 imgChange(1, function() {
+				 window.lockSlider = false;
+			 });
+		 }, 4800);
+	});
+	
+	function imgChange(step, cb) {
+		console.log(window.lockSlider);
+		if(window.lockSlider) {
+			// return
+		}
+		window.lockSlider = true;
+		console.log(sliderImages[currentImage]);
+		$("#slider-image-"+nextImage).fadeIn(650, function(){
+			$("#slider-image-"+currentImage).fadeOut(750, function() {
+				if(currentImage < sliderImages.length-1) {
+					currentImage = currentImage + step;
+				} else {
+					currentImage = 0;
+				}
+				if(nextImage < sliderImages.length-1) {
+					nextImage = nextImage + step;
+				} else {
+					nextImage = 0;
+				}
+			});
+		});
+		
+		cb();
+ 	}
+	</script>
+
+	<div id=”slider-wrapper” style="height: 550px; width: 100%; margin:0 auto; position: relative;">
+		
+		<div id="slider-inner">
+		</div>
+		
+		<!-- <div id="left_holder">
+			<img onclick="imgChange(-1, function() { window.lockSlider = false; })" class="left-arrow" src="/assets/sliderImages/left_arrow.png">
+		</div>
+		<div id="right_holder">
+			<img onclick="imgChange(1, function() { window.lockSlider = false; })" class="right-arrow" src="/assets/sliderImages/right_arrow.png">
+		</div> -->
+		
+	</div>
+
+	<div class="show-for-small-only" style="margin-top: -390px;">
+		<div class="topBox" style="margin-bottom: 150px;">
+			<div class="sideContent">
+				<h3 style="font-family: 'Pacifico', serif; letter-spacing: 2;">Plan your Dream Honeymoon in <span style="font-size: 40px;">2</span> Steps:</h3>
+				<p style="margin-top: 20px; margin-bottom: 5px; text-decoration: underline; letter-spacing: 1.1px;">Step 1:</p>
+				<p><b>Take the quiz</b><br />Find your perfect honeymoon match by answering just 17 questions and discover your top two honeymoon destinations. You can also browse the whole destinations library to view all the exotic possibilities.</p>
+				<p style="margin-top: 20px; margin-bottom: 5px; text-decoration: underline; letter-spacing: 1.1px;">Step 2:</p>
+				<p><b>Fill out a contact form </b><br /> You will be contacted by a honeymoon and destination specialist who can help you make the honeymoon destination you always dreamed of become a reality.</p>
+				<p><%= link_to 'Start Here', "/questionaire" %></p>
+			</div>
+		</div>
+	</div>
+
+	<hr class="show-for-small-only" style="display: none;">
+
+	<div class="container">
